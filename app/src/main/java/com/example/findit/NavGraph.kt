@@ -5,22 +5,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.findit.MyTreasuresScreen
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
 @Composable
-fun AppNavHost(navController: NavHostController = rememberNavController()) {
+fun AppNavHost(navController: NavHostController = rememberNavController(), userId: Int) {
     NavHost(navController = navController, startDestination = "main") {
         composable("main") {
             MainScreen(
-                userId = 1,
+                userId = userId,
                 onShowMap = { navController.navigate("map") },
                 onAddTreasure = { navController.navigate("add") },
                 onMyTreasures = { navController.navigate("myTreasures") },
                 onFindTreasure = { navController.navigate("find") },
-                onShowRanking = { navController.navigate("ranking") }//,
-//                onShowOSM = { navController.navigate("openMap") }
+                onShowRanking = { navController.navigate("ranking") }
             )
         }
         composable("map") {
@@ -32,25 +30,17 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         }
 
         composable("myTreasures") {
-            MyTreasuresScreen(navController)
+            MyTreasuresScreen(navController, userId)
         }
 
         composable("find") {
-            FindTreasureScreen(navController)
+            FindTreasureScreen(navController, userId)
         }
 
         composable("ranking") {
             RankingScreen(navController)
         }
-//        composable("openMap") {
-//            OpenStreetMapScreen(navController)
-//        }
 
-//     composable("camera?userId={userId}&treasureId={treasureId}") { backStackEntry ->
-//    val userId = backStackEntry.arguments?.getString("userId")?.toIntOrNull() ?: return@composable
-//    val treasureId = backStackEntry.arguments?.getString("treasureId")?.toIntOrNull() ?: return@composable
-//    CameraCaptureScreen(navController, userId, treasureId)
-//}
         composable(
             route = "camera?userId={userId}&treasureId={treasureId}",
             arguments = listOf(
@@ -58,12 +48,12 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
                 navArgument("treasureId") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val userId = backStackEntry.arguments?.getInt("userId") ?: return@composable
+            val userIdParam = backStackEntry.arguments?.getInt("userId") ?: return@composable
             val treasureId = backStackEntry.arguments?.getInt("treasureId") ?: return@composable
-            CameraCaptureScreen(navController, userId, treasureId)
+            CameraCaptureScreen(navController, userIdParam, treasureId)
         }
 
-
-
+        composable("addManual") { AddTreasureManualScreen(navController) }
+        composable("addFromMap") { AddTreasureFromMapScreen(navController) }
     }
 }

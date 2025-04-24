@@ -19,11 +19,10 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
 @Composable
-fun FindTreasureScreen(navController: NavController) {
+fun FindTreasureScreen(navController: NavController, userId: Int) {
+
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-
-    val userId = 1 // Tymczasowy użytkownik
 
     var treasures by remember { mutableStateOf<List<Treasure>>(emptyList()) }
     var treasuresWithPhotos by remember { mutableStateOf<List<Int>>(emptyList()) }

@@ -23,7 +23,6 @@ fun MapScreen(navController: NavController) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    // Konfiguracja OSMDroid
     DisposableEffect(Unit) {
         Configuration.getInstance().load(context, context.getSharedPreferences("osm", Context.MODE_PRIVATE))
         onDispose { }
@@ -39,7 +38,6 @@ fun MapScreen(navController: NavController) {
         }
     }
 
-    // Pobieranie danych
     LaunchedEffect(Unit) {
         coroutineScope.launch(Dispatchers.IO) {
             try {
@@ -51,7 +49,6 @@ fun MapScreen(navController: NavController) {
         }
     }
 
-    // Odświeżanie markerów
     LaunchedEffect(treasures) {
         mapView.overlays.clear()
         treasures.forEach { treasure ->
@@ -65,8 +62,6 @@ fun MapScreen(navController: NavController) {
         }
         mapView.invalidate()
     }
-
-    // UI z Boxem
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
             factory = { mapView },

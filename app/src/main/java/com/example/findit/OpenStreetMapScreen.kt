@@ -21,7 +21,6 @@ import org.osmdroid.views.overlay.Marker
 fun OpenStreetMapScreen(navController: NavController) {
     val context = LocalContext.current
 
-    // Konfiguracja OSMDroid
     DisposableEffect(Unit) {
         Configuration.getInstance().load(context, context.getSharedPreferences("osm", Context.MODE_PRIVATE))
         onDispose { }

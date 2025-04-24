@@ -18,9 +18,9 @@ import kotlinx.coroutines.launch
 import android.util.Log
 
 @Composable
-fun MyTreasuresScreen(navController: NavController) {
+fun MyTreasuresScreen(navController: NavController, userId: Int) {
+
     val context = LocalContext.current
-    val userId = 1 // Tymczasowy identyfikator użytkownika
     var treasures by remember { mutableStateOf<List<Treasure>>(emptyList()) }
     var ranking by remember { mutableStateOf(-1) }
     var selectedTreasure by remember { mutableStateOf<Treasure?>(null) }
@@ -91,9 +91,9 @@ fun MyTreasuresScreen(navController: NavController) {
                             contentDescription = "Zdjęcie skarbu",
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .heightIn(min = 100.dp, max = 250.dp) // bardziej naturalny rozmiar
+                                .heightIn(min = 100.dp, max = 250.dp)
                                 .padding(8.dp),
-                            contentScale = ContentScale.Fit // dopasowanie proporcji
+                            contentScale = ContentScale.Fit
                         )
                     }
                 },
